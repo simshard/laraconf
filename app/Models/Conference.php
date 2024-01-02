@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Enums\Region;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Conference extends Model
@@ -21,6 +22,7 @@ class Conference extends Model
         'description',
         'start_date',
         'end_date',
+        'is_published',
         'status',
         'region',
         'venue_id',
@@ -36,6 +38,8 @@ class Conference extends Model
         'start_date' => 'datetime',
         'end_date' => 'datetime',
         'venue_id' => 'integer',
+        'region' => Region::class,
+        'is_published' => 'boolean',
     ];
 
     public function venue(): BelongsTo

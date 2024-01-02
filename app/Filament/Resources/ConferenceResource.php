@@ -24,21 +24,37 @@ class ConferenceResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('Conference Name')
+                    ->helperText('The name of the conference')
+                    ->default('Laracon Online')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('description')
+                Forms\Components\RichEditor::make('description')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\DateTimePicker::make('start_date')
-                    ->required(),
+                    ->required()
+                    ->native(false),
                 Forms\Components\DateTimePicker::make('end_date')
+                    ->required()
+                    ->native(false),
+                Forms\Components\Select::make('status')
+                    ->options([
+                        'draft' => 'Draft',
+                        'published' => 'Published',
+                        'archived' => 'Archived',
+                    ])
+                    ->hint('The status of the conference')
+                    ->hintIcon('heroicon-o-information-circle')
                     ->required(),
-                Forms\Components\TextInput::make('status')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('region')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Toggle::make('is_published')
+                    ->label('Published')
+                    ->hint('Whether the conference is published')
+                    ->hintIcon('heroicon-o-cube')
+                    ->default(true),
+                 Forms\Components\TextInput::make('region')
+                 ->required()
+                 ->maxLength(255),   
                 Forms\Components\Select::make('venue_id')
                     ->relationship('venue', 'name'),
             ]);
@@ -58,6 +74,8 @@ class ConferenceResource extends Resource
                 Tables\Columns\TextColumn::make('end_date')
                     ->dateTime()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('is_published')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('status')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('region')

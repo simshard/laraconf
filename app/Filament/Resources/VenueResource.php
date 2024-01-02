@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\VenueResource\Pages;
-use App\Filament\Resources\VenueResource\RelationManagers;
-use App\Models\Venue;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Enums\Region;
+use App\Models\Venue;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\VenueResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\VenueResource\RelationManagers;
 
 class VenueResource extends Resource
 {
@@ -35,6 +36,10 @@ class VenueResource extends Resource
                 Forms\Components\TextInput::make('postal_code')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\Select::make('region')
+                    ->enum(Region::class )
+                    ->options(Region::class),
+
             ]);
     }
 
@@ -49,6 +54,8 @@ class VenueResource extends Resource
                 Tables\Columns\TextColumn::make('country')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('postal_code')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('region')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
