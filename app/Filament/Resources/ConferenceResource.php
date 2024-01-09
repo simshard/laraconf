@@ -25,53 +25,7 @@ class ConferenceResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->label('Conference Name')
-                    ->helperText('The name of the conference')
-                    ->default('Laracon Online')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\RichEditor::make('description')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\DateTimePicker::make('start_date')
-                    ->required()
-                    ->native(false),
-                Forms\Components\DateTimePicker::make('end_date')
-                    ->required()
-                    ->native(false),
-                Forms\Components\Select::make('status')
-                    ->options([
-                        'draft' => 'Draft',
-                        'published' => 'Published',
-                        'archived' => 'Archived',
-                    ])
-                    ->hint('The status of the conference')
-                    ->hintIcon('heroicon-o-information-circle')
-                    ->required(),
-                Forms\Components\Toggle::make('is_published')
-                    ->label('Published')
-                    ->hint('Whether the conference is published')
-                    ->hintIcon('heroicon-o-cube')
-                    ->default(true),
-                Forms\Components\Select::make('region')
-                    ->live()
-                    ->enum(Region::class)
-                    ->options(Region::class),
-                Forms\Components\Select::make('venue_id')
-                    ->searchable()
-                    ->preload()      
-                    ->createOptionForm(Venue::getForm())
-                    ->editOptionForm(Venue::getForm())
-                    ->relationship('venue', 'name', modifyQueryUsing: function (Builder $query, Forms\Get $get) {
-                        return $query->where('region', $get('region'));
-                    }),
-                Forms\Components\CheckboxList::make('speakers')
-                ->relationship('speakers', 'name')  
-                ->options(Speaker::all()->pluck( 'name','id' ))
-                ->required(),
-            ]);
+            ->schema(Conference::getForm());
 
             
     }
