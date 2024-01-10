@@ -2,17 +2,12 @@
 
 namespace App\Filament\Resources;
 
-
-use Filament\Tables;
-use App\Enums\Region;
+use App\Filament\Resources\VenueResource\Pages;
 use App\Models\Venue;
 use Filament\Forms\Form;
-use Filament\Tables\Table;
 use Filament\Resources\Resource;
-use Illuminate\Database\Eloquent\Builder;
-use App\Filament\Resources\VenueResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\VenueResource\RelationManagers;
+use Filament\Tables;
+use Filament\Tables\Table;
 
 class VenueResource extends Resource
 {

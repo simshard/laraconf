@@ -3,13 +3,10 @@
 namespace App\Models;
 
 use App\Enums\Region;
-use App\Models\Conference;
-use Forms\Components\Select;
 use Filament\Forms;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Filament\Forms\Components\TextInput;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Factories\HasFactory;#
+use Illuminate\Database\Eloquent\Relations\HasMany; //
 
 class Venue extends Model
 {
@@ -59,11 +56,10 @@ class Venue extends Model
                 ->required()
                 ->maxLength(255),
             Forms\Components\Select::make('region')
-                ->enum(Region::class )
+                ->enum(Region::class)
                 ->options(Region::class),
 
         ];
 
     }
-
 }

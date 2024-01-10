@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use Filament\Forms\Components\Textarea;
-use Illuminate\Database\Eloquent\Model;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\CheckboxList;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Speaker extends Model
@@ -73,7 +73,7 @@ class Speaker extends Model
                         'twitter-influencer' => 'Large Twitter Following',
                         'youtube-influencer' => 'Large YouTube Following',
                         'open-source' => 'Open Source Creator / Maintainer',
-                        'unique-perspective' => 'Unique Perspective'
+                        'unique-perspective' => 'Unique Perspective',
                     ]
                 )
                 ->descriptions([

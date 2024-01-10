@@ -2,19 +2,12 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
-use Filament\Tables;
-use App\Enums\Region;
-use App\Models\Venue;
-use App\Models\Speaker;
-use Filament\Forms\Form;
-use App\Models\Conference;
-use Filament\Tables\Table;
-use Filament\Resources\Resource;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ConferenceResource\Pages;
-use App\Filament\Resources\ConferenceResource\RelationManagers;
+use App\Models\Conference;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Table;
 
 class ConferenceResource extends Resource
 {
@@ -27,7 +20,6 @@ class ConferenceResource extends Resource
         return $form
             ->schema(Conference::getForm());
 
-            
     }
 
     public static function table(Table $table): Table

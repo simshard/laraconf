@@ -2,26 +2,23 @@
 
 namespace App\Models;
 
-use Filament\Forms;
 use App\Enums\Region;
-use App\Models\Venue;
-use App\Models\Speaker;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Toggle;
+use Filament\Forms;
 use Filament\Forms\Components\Actions;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Fieldset;
-use Illuminate\Database\Eloquent\Model;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\RichEditor;
-use Illuminate\Database\Eloquent\Builder;
-use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\Actions\Action;
+use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\DateTimePicker;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
- 
 
 class Conference extends Model
 {
@@ -72,19 +69,19 @@ class Conference extends Model
         return $this->belongsToMany(Talk::class);
     }
 
-    public static function getForm( ): array
+    public static function getForm(): array
     {
         return [
             Section::make('Conference Details')
                 ->columns(2)
                 ->schema([
-                     TextInput::make('name')
-                    ->label('Conference Name')
-                    ->helperText('The name of the conference')
-                    ->default('?')
-                    ->required()
-                    ->maxLength(255)
-                    ->columnSpanFull(),
+                    TextInput::make('name')
+                        ->label('Conference Name')
+                        ->helperText('The name of the conference')
+                        ->default('?')
+                        ->required()
+                        ->maxLength(255)
+                        ->columnSpanFull(),
                     RichEditor::make('description')
                         ->required()
                         ->maxLength(255)
@@ -113,18 +110,18 @@ class Conference extends Model
                                 // ->hintIcon('heroicon-o-cube')
                                 ->default(true),
                         ]),
-                    ]),
-            Section ::make('Conference Location')
+                ]),
+            Section::make('Conference Location')
                 ->columns(2)
                 ->schema([
                     Select::make('region')
-                    ->live()
-                    ->enum(Region::class)
-                    ->options(Region::class),
- 
+                        ->live()
+                        ->enum(Region::class)
+                        ->options(Region::class),
+
                     Select::make('venue_id')
                         ->searchable()
-                        ->preload()      
+                        ->preload()
                         ->createOptionForm(Venue::getForm())
                         ->editOptionForm(Venue::getForm())
                         ->relationship('venue', 'name', modifyQueryUsing: function (Builder $query, Forms\Get $get) {
@@ -132,38 +129,36 @@ class Conference extends Model
                         }),
                 ]),
             Section::make('Conference Speakers')
-            ->columns(2)
-            ->schema([
-            CheckboxList::make('speakers')
-            ->columns(2)
-            ->relationship('speakers', 'name')  
-            ->options(Speaker::all()->pluck( 'name','id' ))
-            ->required(),
-            ]),
+                ->columns(2)
+                ->schema([
+                    CheckboxList::make('speakers')
+                        ->columns(2)
+                        ->relationship('speakers', 'name')
+                        ->options(Speaker::all()->pluck('name', 'id'))
+                        ->required(),
+                ]),
 
             Actions::make([
                 Action::make('star')
                     ->label('Fill with Faketory Data')
                     ->icon('heroicon-m-star')
                     ->visible(function (string $operation) {
-                        if($operation !== 'create') {
+                        if ($operation !== 'create') {
                             return false;
                         }
-                        if(! app()->environment('local')) {
+                        if (! app()->environment('local')) {
                             return false;
                         }
+
                         return true;
                     })
                     ->action(function ($livewire) {
-                     $data = Conference::factory()->make()->toArray();
-                    $livewire->form->fill($data);  
+                        $data = Conference::factory()->make()->toArray();
+                        $livewire->form->fill($data);
                     }),
-                
+
             ]),
-                
-            
 
-
-            ];
+        ];
     }
 }
