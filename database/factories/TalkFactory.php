@@ -21,8 +21,8 @@ class TalkFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->sentence(4),
-            'abstract' => $this->faker->text(),
+            'title' => $this->faker->bs(),
+            'abstract' => $this->faker->catchPhrase(),
             'speaker_id' => Speaker::factory(),
         ];
     }
