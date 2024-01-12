@@ -22,7 +22,7 @@ class TalkFactory extends Factory
     {
         return [
             'title' => $this->faker->bs(),
-            'abstract' => $this->faker->catchPhrase(),
+            'abstract' => $this->faker->realTextBetween($minNbChars = 160, $maxNbChars = 200, $indexSize = 2),
             'speaker_id' => Speaker::factory(),
         ];
     }
