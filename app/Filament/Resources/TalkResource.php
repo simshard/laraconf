@@ -2,18 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
-use App\Models\Talk;
-use Filament\Tables;
-use Filament\Forms\Form;
 use App\Enums\TalkLength;
 use App\Enums\TalkStatus;
-use Filament\Tables\Table;
-use Illuminate\Support\Str;
-use Filament\Resources\Resource;
-use Filament\Notifications\Notification;
-use Illuminate\Database\Eloquent\Collection;
 use App\Filament\Resources\TalkResource\Pages;
+use App\Models\Talk;
+use Filament\Forms\Form;
+use Filament\Notifications\Notification;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Str;
 
 class TalkResource extends Resource
 {
@@ -24,18 +23,7 @@ class TalkResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('abstract')
-                    ->required()
-                    ->maxLength(65535)
-                    ->columnSpanFull(),
-                Forms\Components\Select::make('speaker_id')
-                    ->relationship('speaker', 'name')
-                    ->required(),
-            ]);
+            ->schema(Talk::getForm());
     }
 
     public static function table(Table $table): Table
@@ -120,7 +108,7 @@ class TalkResource extends Resource
                                 ->duration(3000)
                                 ->body('The speaker has been notified.')
                                 ->send();
-                        })
+                        }),
                 ]),
             ])
             ->bulkActions([
@@ -137,11 +125,11 @@ class TalkResource extends Resource
                 Tables\Actions\Action::make('export')
                     ->tooltip('This will export all records visible in the table. Adjust filters to export a subset of records.')
                     ->action(function ($livewire) {
-                        dd($livewire->getFilteredTableQuery()->count());
+                        dd($livewire->getFilteredTableQuery());
                         //ray("Exporting talks");
-                    })
+                    }),
             ]);
-        ;
+
     }
 
     public static function getRelations(): array

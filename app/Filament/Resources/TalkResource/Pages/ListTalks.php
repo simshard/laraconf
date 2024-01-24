@@ -2,12 +2,11 @@
 
 namespace App\Filament\Resources\TalkResource\Pages;
 
-use Filament\Actions;
 use App\Enums\TalkStatus;
-use Filament\Resources\Components\Tab;
 use App\Filament\Resources\TalkResource;
+use Filament\Actions;
+use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
-
 
 class ListTalks extends ListRecords
 {
