@@ -6,10 +6,11 @@ use App\Enums\TalkLength;
 use App\Enums\TalkStatus;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Talk extends Model
@@ -71,13 +72,16 @@ class Talk extends Model
             TextInput::make('title')
                 ->required()
                 ->maxLength(255),
-            Textarea::make('abstract')
+            RichEditor::make('abstract')
                 ->required()
                 ->maxLength(65535)
                 ->columnSpanFull(),
             Select::make('speaker_id')
-                ->relationship('speaker', 'name')
-                ->required(),
+            ->hidden(function () use ($speakerId) {
+                return $speakerId !== null;
+            })
+            ->relationship('speaker', 'name')
+            ->required(),      
         ];
     }
 }
