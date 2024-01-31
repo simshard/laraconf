@@ -66,6 +66,12 @@ class Talk extends Model
         $this->save();
     }
 
+    /**
+     * Get the form fields for creating or updating a Talk.
+     *
+     * @param int|null $speakerId The ID of the speaker (optional).
+     * @return array The array of form fields.
+     */
     public static function getForm($speakerId = null): array
     {
         return [
@@ -77,11 +83,11 @@ class Talk extends Model
                 ->maxLength(65535)
                 ->columnSpanFull(),
             Select::make('speaker_id')
-            ->hidden(function () use ($speakerId) {
-                return $speakerId !== null;
-            })
-            ->relationship('speaker', 'name')
-            ->required(),      
+                ->hidden(function () use ($speakerId) {
+                    return $speakerId !== null;
+                })
+                ->relationship('speaker', 'name')
+                ->required(),
         ];
     }
 }
